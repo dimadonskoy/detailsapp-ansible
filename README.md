@@ -73,6 +73,7 @@ your-server-ip ansible_user=your_ssh_user
 Use the provided deployment script to automatically check prerequisites and start the environment:
 
 ```bash
+chmod +x deploy.sh
 ./deploy.sh
 ```
 
