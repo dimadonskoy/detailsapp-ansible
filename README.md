@@ -1,4 +1,8 @@
-# 🚀 Ansible Web Application Deployment
+# 🚀 Details-app application deployment
+
+[![Ansible](https://img.shields.io/badge/Ansible-000000?style=for-the-badge&logo=ansible&logoColor=white)](https://www.ansible.com/)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)](https://www.nginx.com/)
 
 This Ansible project automates the deployment of a Python web application to Ubuntu servers. It handles the complete setup including Python environment, web server (Nginx), and application server (Gunicorn).
 
