@@ -1,0 +1,18 @@
+---
+# Application settings
+app_user: www-data
+app_dir: /var/www/detailsapp
+venv_path: "{{ app_dir }}/venv"
+
+# Service settings
+nginx_site_path: /etc/nginx/sites-available/detailsapp
+nginx_enabled_path: /etc/nginx/sites-enabled/detailsapp
+gunicorn_service_path: /etc/systemd/system/detailsapp.service
+
+# Install packages
+install_packages:
+- python3
+- python3-pip
+- python3-venv
+- nginx
+- gunicorn

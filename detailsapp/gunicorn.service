@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve detailsapp
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/detailsapp
+Environment="PATH=/var/www/detailsapp/venv/bin"
+ExecStart=/var/www/detailsapp/venv/bin/gunicorn -c /var/www/detailsapp/gunicorn_conf.py details:app
+
+[Install]
+WantedBy=multi-user.target 

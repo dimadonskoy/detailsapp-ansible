@@ -1,0 +1,92 @@
+---
+- name: Deploy detailsapp web application
+  hosts: web
+  become: True
+  vars_files:
+  - vars/vars.yml
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+
+  - name: Install required packages
+    apt:
+      name: "{{ install_packages }}"
+      state: present
+
+  - name: Create Python virtual environment
+    command: "python3 -m venv {{ venv_path }}"
+    args:
+      creates: "{{ venv_path }}"
+
+  - name: Copy application files
+    copy:
+      src: "{{ playbook_dir }}/../detailsapp/"
+      dest: "{{ app_dir }}"
+      owner: "{{ app_user }}"
+      group: "{{ app_user }}"
+      mode: "0755"
+
+  - name: Install Python dependencies
+    pip:
+      requirements: "{{ app_dir }}/requirements.txt"
+      virtualenv: "{{ venv_path }}"
+      state: present
+
+  - name: Configure Nginx
+    copy:
+      src: "{{ playbook_dir }}/../detailsapp/details_nginx.conf"
+      dest: "{{ nginx_site_path }}"
+      owner: root
+      group: root
+      mode: "0644"
+    notify: restart nginx
+
+  - name: Remove default Nginx site
+    file:
+      path: /etc/nginx/sites-enabled/default
+      state: absent
+    notify: restart nginx
+
+  - name: Enable Nginx site
+    file:
+      src: "{{ nginx_site_path }}"
+      dest: "{{ nginx_enabled_path }}"
+      state: link
+    notify: restart nginx
+
+  - name: Configure Gunicorn service
+    copy:
+      src: "{{ playbook_dir }}/../detailsapp/gunicorn.service"
+      dest: "{{ gunicorn_service_path }}"
+      owner: root
+      group: root
+      mode: "0644"
+    notify: restart gunicorn
+
+  - name: Start and enable nginx
+    systemd:
+      name: nginx
+      state: started
+      enabled: yes
+
+  - name: Start and enable detailsapp
+    systemd:
+      name: "detailsapp"
+      state: started
+      enabled: yes
+
+  handlers:
+  - name: restart nginx
+    systemd:
+      name: nginx
+      state: restarted
+
+  - name: restart gunicorn
+    systemd:
+      name: "detailsapp"
+      state: restarted
