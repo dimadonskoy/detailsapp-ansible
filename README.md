@@ -42,9 +42,18 @@ This project automates the deployment of a Python web application using Ansible 
 
 ### 1️⃣ Update `hosts.ini` with your server details:
 
+For local development with Vagrant:
+
 ```ini
 [web]
-192.168.1.100 ansible_user=your_ssh_user
+devops-env ansible_host=192.168.1.100 ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key
+```
+
+For production deployment:
+
+```ini
+[web]
+your-server-ip ansible_user=your_ssh_user
 ```
 
 ### 2️⃣ Review and modify variables in `playbooks/vars/vars.yml` if needed:
