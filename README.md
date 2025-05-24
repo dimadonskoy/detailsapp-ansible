@@ -4,7 +4,6 @@
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)](https://www.nginx.com/)
 [![Vagrant](https://img.shields.io/badge/Vagrant-1868F2?style=for-the-badge&logo=vagrant&logoColor=white)](https://www.vagrantup.com/)
-[![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=macos&logoColor=white)](https://www.apple.com/macos/)
 
 This project automates the deployment of a Python web application using Ansible and Vagrant. It provides a consistent development environment and handles the complete setup including Python environment, web server (Nginx), and application server (Gunicorn).
 
@@ -21,12 +20,13 @@ This project automates the deployment of a Python web application using Ansible 
 │   └── 📂 vars/
 │       └── 📄 vars.yml           # Variable definitions
 ├── 📄 hosts.ini                  # Inventory file
-└── 📄 Vagrantfile               # Vagrant configuration
+├── 📄 Vagrantfile               # Vagrant configuration
+└── 📄 deploy.sh                 # Deployment script
 ```
 
 ## ⚙️ Prerequisites
 
-### Control Machine (macOS)
+### Control Machine
 
 - ✅ Ansible installed via Homebrew:
   ```bash
@@ -36,7 +36,10 @@ This project automates the deployment of a Python web application using Ansible 
 - 🐧 Target server running Ubuntu
 - 🔑 SSH access to the target server
 - 🐍 Python 3.x on the target server
-- 📦 Vagrant installed (for local development)
+- 📦 Vagrant installed (for local development):
+  ```bash
+  brew install vagrant
+  ```
 
 ## 🔧 Configuration
 
@@ -65,7 +68,26 @@ your-server-ip ansible_user=your_ssh_user
 
 ## 🚀 Deployment
 
-### Local Development with Vagrant
+### Quick Start
+
+Use the provided deployment script to automatically check prerequisites and start the environment:
+
+```bash
+./deploy.sh
+```
+
+The script will:
+
+1. ✅ Check if running as root (and prevent it)
+2. ✅ Verify Vagrant is installed
+3. ✅ Verify Ansible is installed
+4. ✅ Check for required configuration files
+5. 🚀 Start Vagrant VM
+6. ⚙️ Run Ansible provisioning
+
+### Manual Deployment
+
+#### Local Development with Vagrant
 
 1. Start the Vagrant VM:
 
@@ -79,9 +101,9 @@ vagrant up
 vagrant provision
 ```
 
-The application will be available at `http://localhost:8080`
+The application will be available at `http://192.168.1.100:8080`
 
-### Production Deployment
+#### Production Deployment
 
 Run the deployment playbook:
 
