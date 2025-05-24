@@ -3,8 +3,9 @@
 [![Ansible](https://img.shields.io/badge/Ansible-000000?style=for-the-badge&logo=ansible&logoColor=white)](https://www.ansible.com/)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)](https://www.nginx.com/)
+[![Vagrant](https://img.shields.io/badge/Vagrant-1868F2?style=for-the-badge&logo=vagrant&logoColor=white)](https://www.vagrantup.com/)
 
-This Ansible project automates the deployment of a Python web application to Ubuntu servers. It handles the complete setup including Python environment, web server (Nginx), and application server (Gunicorn).
+This project automates the deployment of a Python web application using Ansible and Vagrant. It provides a consistent development environment and handles the complete setup including Python environment, web server (Nginx), and application server (Gunicorn).
 
 ## 📁 Project Structure
 
@@ -18,7 +19,8 @@ This Ansible project automates the deployment of a Python web application to Ubu
 │   ├── 📄 deploy.yml             # Main deployment playbook
 │   └── 📂 vars/
 │       └── 📄 vars.yml           # Variable definitions
-└── 📄 hosts.ini                  # Inventory file
+├── 📄 hosts.ini                  # Inventory file
+└── 📄 Vagrantfile               # Vagrant configuration
 ```
 
 ## ⚙️ Prerequisites
@@ -27,6 +29,7 @@ This Ansible project automates the deployment of a Python web application to Ubu
 - 🐧 Target server running Ubuntu
 - 🔑 SSH access to the target server
 - 🐍 Python 3.x on the target server
+- 📦 Vagrant installed (for local development)
 
 ## 🔧 Configuration
 
@@ -45,6 +48,24 @@ This Ansible project automates the deployment of a Python web application to Ubu
 - 📦 Package lists
 
 ## 🚀 Deployment
+
+### Local Development with Vagrant
+
+1. Start the Vagrant VM:
+
+```bash
+vagrant up
+```
+
+2. Provision the VM with Ansible:
+
+```bash
+vagrant provision
+```
+
+The application will be available at `http://localhost:8080`
+
+### Production Deployment
 
 Run the deployment playbook:
 
@@ -125,6 +146,15 @@ sudo nginx -t
 
 ```bash
 ls -la /var/www/detailsapp/
+```
+
+### 5. 🐛 Vagrant-specific issues:
+
+If you encounter permission issues with Vagrant, try:
+
+```bash
+vagrant destroy -f
+vagrant up
 ```
 
 ## 👨‍💻 Author
