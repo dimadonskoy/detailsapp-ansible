@@ -4,6 +4,7 @@
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)](https://www.nginx.com/)
 [![Vagrant](https://img.shields.io/badge/Vagrant-1868F2?style=for-the-badge&logo=vagrant&logoColor=white)](https://www.vagrantup.com/)
+[![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=macos&logoColor=white)](https://www.apple.com/macos/)
 
 This project automates the deployment of a Python web application using Ansible and Vagrant. It provides a consistent development environment and handles the complete setup including Python environment, web server (Nginx), and application server (Gunicorn).
 
@@ -25,7 +26,13 @@ This project automates the deployment of a Python web application using Ansible 
 
 ## ⚙️ Prerequisites
 
-- ✅ Ansible installed on the control machine
+### Control Machine (macOS)
+
+- ✅ Ansible installed via Homebrew:
+  ```bash
+  brew install ansible
+  ```
+- 📦 Homebrew package manager
 - 🐧 Target server running Ubuntu
 - 🔑 SSH access to the target server
 - 🐍 Python 3.x on the target server
