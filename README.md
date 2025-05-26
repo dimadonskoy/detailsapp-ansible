@@ -1,202 +1,111 @@
-# 🚀 Details-app application deployment
+# DevOps Environment Setup
 
-[![Ansible](https://img.shields.io/badge/Ansible-000000?style=for-the-badge&logo=ansible&logoColor=white)](https://www.ansible.com/)
-[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)](https://www.nginx.com/)
-[![Vagrant](https://img.shields.io/badge/Vagrant-1868F2?style=for-the-badge&logo=vagrant&logoColor=white)](https://www.vagrantup.com/)
+This project automates the deployment of a DevOps environment using Vagrant and Ansible. It supports both ARM64 (Apple Silicon) and x86_64 architectures.
 
-This project automates the deployment of a Python web application using Ansible and Vagrant. It provides a consistent development environment and handles the complete setup including Python environment, web server (Nginx), and application server (Gunicorn).
+## Prerequisites
 
-## 📁 Project Structure
+- [Vagrant](https://www.vagrantup.com/downloads)
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- [Python 3](https://www.python.org/downloads/)
+- [pip](https://pip.pypa.io/en/stable/installation/)
+
+## Project Structure
 
 ```
 .
-├── 📂 detailsapp/                  # Application directory
-│   ├── 📄 details_nginx.conf      # Nginx configuration
-│   ├── 📄 gunicorn.service        # Systemd service file
-│   └── 📄 ...                     # Application files
-├── 📂 playbooks/
-│   ├── 📄 deploy.yml             # Main deployment playbook
-│   └── 📂 vars/
-│       └── 📄 vars.yml           # Variable definitions
-├── 📄 hosts.ini                  # Inventory file
-├── 📄 Vagrantfile               # Vagrant configuration
-└── 📄 deploy.sh                 # Deployment script
+├── Vagrantfile          # VM configuration with architecture detection
+├── hosts.ini           # Ansible inventory file
+├── deploy.sh           # Deployment automation script
+├── requirements.txt    # Python dependencies
+├── playbooks/         # Ansible playbooks
+│   └── deploy.yml     # Main deployment playbook
+└── detailsapp/        # Application files
+    ├── app.py         # Main application
+    ├── requirements.txt
+    └── supervisor.conf
 ```
 
-## ⚙️ Prerequisites
+## Features
 
-### Control Machine
+- **Automatic Architecture Detection**: Automatically selects the appropriate Ubuntu box based on your system's architecture (ARM64 for Apple Silicon, x86_64 for Intel)
+- **Automated Deployment**: Single command deployment using `deploy.sh`
+- **Infrastructure as Code**: VM configuration managed through Vagrant
+- **Configuration Management**: System configuration managed through Ansible
+- **Logging**: Comprehensive logging of deployment process
 
-- ✅ Ansible installed via Homebrew:
-  ```bash
-  brew install ansible
-  ```
-- 📦 Homebrew package manager
-- 🐧 Target server running Ubuntu
-- 🔑 SSH access to the target server
-- 🐍 Python 3.x on the target server
-- 📦 Vagrant installed (for local development):
-  ```bash
-  brew install vagrant
-  ```
+## Installation
 
-## 🔧 Configuration
+1. Clone the repository:
 
-### 1️⃣ Update `hosts.ini` with your server details:
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
+   ```
 
-For local development with Vagrant:
+2. Install Python dependencies:
 
-```ini
-[web]
-devops-env ansible_host=192.168.1.100 ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-For production deployment:
+3. Run the deployment script:
+   ```bash
+   sudo ./deploy.sh
+   ```
 
-```ini
-[web]
-your-server-ip ansible_user=your_ssh_user
-```
+## Architecture Support
 
-### 2️⃣ Review and modify variables in `playbooks/vars/vars.yml` if needed:
+The system automatically detects your CPU architecture and uses the appropriate Ubuntu box:
 
-- 📝 Application name
-- 👤 User permissions
-- 📂 Directory paths
-- 📦 Package lists
+- ARM64 (Apple Silicon): Uses `net9/ubuntu-24.04-arm64`
+- x86_64 (Intel): Uses `net9/ubuntu-24.04`
 
-## 🚀 Deployment
+## Deployment Process
 
-### Quick Start
+The deployment script (`deploy.sh`) performs the following steps:
 
-Use the provided deployment script to automatically check prerequisites and start the environment:
+1. Checks for required dependencies (Vagrant, VirtualBox, Ansible)
+2. Creates necessary log directories
+3. Detects VM status and runs appropriate Vagrant commands:
+   - For new VMs: `vagrant up` (includes initial provisioning)
+   - For existing VMs: `vagrant provision`
 
-```bash
-chmod +x deploy.sh
-./deploy.sh
-```
+## Logging
 
-The script will:
+Deployment logs are stored in `/var/log/detailsapp/detailsapp.log`
 
-1. ✅ Check if running as root (and prevent it)
-2. ✅ Verify Vagrant is installed
-3. ✅ Verify Ansible is installed
-4. ✅ Check for required configuration files
-5. 🚀 Start Vagrant VM
-6. ⚙️ Run Ansible provisioning
+## Troubleshooting
 
-### Manual Deployment
+1. **VM Network Issues**:
 
-#### Local Development with Vagrant
+   - The VM uses a private network with IP `192.168.56.100`
+   - If you experience network conflicts, check your VirtualBox network settings
 
-1. Start the Vagrant VM:
+2. **Provisioning Issues**:
 
-```bash
-vagrant up
-```
+   - Check the Ansible logs in `/var/log/detailsapp/detailsapp.log`
+   - Verify that all required files are present in the project structure
 
-2. Provision the VM with Ansible:
+3. **Architecture Detection**:
+   - If you encounter issues with the wrong box being selected, verify your system architecture:
+     ```bash
+     uname -m
+     ```
 
-```bash
-vagrant provision
-```
+## Contributing
 
-The application will be available at `http://192.168.1.100:8080`
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
 
-#### Production Deployment
+## License
 
-Run the deployment playbook:
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-```bash
-ansible-playbook -i hosts.ini playbooks/deploy.yml
-```
+## Authors
 
-### The playbook will:
-
-1. 📦 Install required system packages
-2. 🐍 Create Python virtual environment
-3. 📂 Copy application files
-4. 📦 Install Python dependencies
-5. 🌐 Configure Nginx
-6. ⚙️ Set up Gunicorn service
-7. 🚀 Start and enable services
-
-## 🛠️ Services
-
-The deployment sets up two main services:
-
-### 1. 🌐 Nginx - Web server
-
-- 📄 Configuration: `/etc/nginx/sites-available/detailsapp`
-- 🔗 Enabled site: `/etc/nginx/sites-enabled/detailsapp`
-
-### 2. ⚙️ Gunicorn - Application server
-
-- 📄 Service file: `/etc/systemd/system/detailsapp.service`
-- 🔄 Managed by systemd
-
-## 📂 Directory Structure
-
-- 📂 Application: `/var/www/detailsapp/`
-- 🐍 Virtual Environment: `/var/www/detailsapp/venv/`
-- 📝 Logs: Systemd journal
-
-## ⚙️ Management
-
-### Common service management commands:
-
-```bash
-# 📊 Check service status
-sudo systemctl status detailsapp
-sudo systemctl status nginx
-
-# 🔄 Restart services
-sudo systemctl restart detailsapp
-sudo systemctl restart nginx
-
-# 📝 View logs
-sudo journalctl -u detailsapp
-sudo journalctl -u nginx
-```
-
-## 🔍 Troubleshooting
-
-### 1. 📊 Check service status:
-
-```bash
-sudo systemctl status detailsapp
-sudo systemctl status nginx
-```
-
-### 2. 📝 View application logs:
-
-```bash
-sudo journalctl -u detailsapp -f
-```
-
-### 3. ✅ Check Nginx configuration:
-
-```bash
-sudo nginx -t
-```
-
-### 4. 🔒 Verify file permissions:
-
-```bash
-ls -la /var/www/detailsapp/
-```
-
-### 5. 🐛 Vagrant-specific issues:
-
-If you encounter permission issues with Vagrant, try:
-
-```bash
-vagrant destroy -f
-vagrant up
-```
-
-## 👨‍💻 Author
-
-**Dmitri Donskoy**  
-📧 email: crooper22@gmail.com
+- Dmitri Donskoy
+- Yair
