@@ -39,18 +39,13 @@ This project automates the deployment of a DevOps environment using Vagrant and 
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
-   cd <repository-name>
+   git clone git@github.com:dimadonskoy/detailsapp-ansible.git
+   cd detailsapp-ansible
    ```
 
-2. Install Python dependencies:
-
+2. Run the deployment script:
    ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Run the deployment script:
-   ```bash
+   sudo chmod +x deploy.sh
    sudo ./deploy.sh
    ```
 
@@ -70,36 +65,6 @@ The deployment script (`deploy.sh`) performs the following steps:
 3. Detects VM status and runs appropriate Vagrant commands:
    - For new VMs: `vagrant up` (includes initial provisioning)
    - For existing VMs: `vagrant provision`
-
-## Logging
-
-Deployment logs are stored in `/var/log/detailsapp/detailsapp.log`
-
-## Troubleshooting
-
-1. **VM Network Issues**:
-
-   - The VM uses a private network with IP `192.168.56.100`
-   - If you experience network conflicts, check your VirtualBox network settings
-
-2. **Provisioning Issues**:
-
-   - Check the Ansible logs in `/var/log/detailsapp/detailsapp.log`
-   - Verify that all required files are present in the project structure
-
-3. **Architecture Detection**:
-   - If you encounter issues with the wrong box being selected, verify your system architecture:
-     ```bash
-     uname -m
-     ```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
 
 ## License
 
