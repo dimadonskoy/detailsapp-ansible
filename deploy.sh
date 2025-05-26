@@ -2,7 +2,7 @@
 
 #######################################################################     
 
-#Developed by : Dmitri Donskoy
+#Developed by : Dmitri & Yair
 #Purpose : Automates the deployment of the Detailsapp using Ansible for configuration management and Vagrant for virtual machine provisioning.
 #Update date : 24.05.2025
 #Version : 0.0.1
@@ -50,4 +50,11 @@ if [[ ! -f "Vagrantfile" ]]; then
     exit 1
 fi
 
-vagrant up && vagrant provision | tee -a "$LOGFILE"
+# Check if VM exists
+if vagrant status | grep -q "not created"; then
+    # VM doesn't exist, use vagrant up which will run provisioning
+    vagrant up | tee -a "$LOGFILE"
+else
+    # VM exists, just run provisioning
+    vagrant provision | tee -a "$LOGFILE"
+fi
