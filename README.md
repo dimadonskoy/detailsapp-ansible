@@ -1,6 +1,6 @@
-# DevOps Environment Setup
+# Webapp (Details) deployment
 
-This project automates the deployment of a DevOps environment using Vagrant and Ansible. It supports both ARM64 (Apple Silicon) and x86_64 architectures.
+This project automates the deployment of a web app using Vagrant and Ansible. It supports both ARM64 (Apple Silicon) and x86_64 architectures.
 
 ## Prerequisites
 
