@@ -1,6 +1,15 @@
 ####### UBUNTU ARM64 FOR DEVOPS########
 Vagrant.configure("2") do |config|
-  config.vm.box = "net9/ubuntu-24.04-arm64"
+  # Detect CPU architecture
+  arch = `uname -m`.strip
+  
+  # Set box based on architecture
+  if arch == 'arm64'
+    config.vm.box = "net9/ubuntu-24.04-arm64"
+  else
+    config.vm.box = "net9/ubuntu-24.04"
+  end
+  
   config.vm.hostname = "devops-env"
   config.vm.network "private_network", ip: "192.168.1.100"
   config.vm.provider "virtualbox" do |vb|

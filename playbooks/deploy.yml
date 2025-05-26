@@ -13,6 +13,14 @@
       update_cache: yes
       cache_valid_time: 3600
 
+  - name: Copy application files
+    copy:
+      src: "{{ playbook_dir }}/../detailsapp/"
+      dest: "{{ app_dir }}"
+      owner: "{{ app_user }}"
+      group: "{{ app_user }}"
+      mode: "0755"
+
   - name: Install required packages
     apt:
       name: "{{ install_packages }}"
@@ -23,13 +31,12 @@
     args:
       creates: "{{ venv_path }}"
 
-  - name: Copy application files
-    copy:
-      src: "{{ playbook_dir }}/../detailsapp/"
-      dest: "{{ app_dir }}"
-      owner: "{{ app_user }}"
-      group: "{{ app_user }}"
-      mode: "0755"
+  - name: Activate virtual environment
+    shell: |
+      source /var/www/detailsapp/venv/bin/activate
+      python3 --version
+    args:
+      executable: /bin/bash
 
   - name: Install Python dependencies
     pip:
