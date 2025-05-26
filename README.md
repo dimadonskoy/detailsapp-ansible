@@ -1,4 +1,4 @@
-# Webapp (Details) deployment
+# Webapp (Details) deployment project
 
 This project automates the deployment of a web app using Vagrant and Ansible. It supports both ARM64 (Apple Silicon) and x86_64 architectures.
 
