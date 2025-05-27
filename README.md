@@ -16,14 +16,19 @@ This project automates the deployment of a web app using Vagrant and Ansible. It
 .
 ├── Vagrantfile          # VM configuration with architecture detection
 ├── hosts.ini           # Ansible inventory file
+├── ansible.cfg         # Ansible configuration file
 ├── deploy.sh           # Deployment automation script
-├── requirements.txt    # Python dependencies
-├── playbooks/         # Ansible playbooks
-│   └── deploy.yml     # Main deployment playbook
-└── detailsapp/        # Application files
-    ├── app.py         # Main application
-    ├── requirements.txt
-    └── supervisor.conf
+├── LICENSE.md          # Project license file
+├── playbooks/          # Ansible playbooks
+│   ├── deploy.yml      # Main deployment playbook
+│   └── vars/           # Ansible variables
+└── detailsapp/         # Application files
+    ├── src/            # Source code directory
+    ├── details.py      # Main application
+    ├── details_nginx.conf  # Nginx configuration for the app
+    ├── gunicorn.service    # Systemd service file
+    ├── gunicorn_conf.py    # Gunicorn configuration
+    └── requirements.txt    # Python dependencies
 ```
 
 ## Features
