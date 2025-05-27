@@ -1,4 +1,3 @@
-####### UBUNTU ARM64 FOR DEVOPS########
 Vagrant.configure("2") do |config|
   # Detect CPU architecture
   arch = `uname -m`.strip
