@@ -1,4 +1,8 @@
-# Webapp (Details) deployment project
+# 🚀 Webapp (Details) deployment project
+
+[![Bash](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white)](https://www.gnu.org/software/bash/)
+[![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)](https://www.nginx.com/)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/)
 
 This project automates the deployment of a web app using Vagrant and Ansible. It supports both ARM64 (Apple Silicon) and x86_64 architectures.
 
