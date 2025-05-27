@@ -21,7 +21,7 @@ This project automates the deployment of a web app using Vagrant and Ansible. It
 ├── LICENSE.md          # Project license file
 ├── playbooks/          # Ansible playbooks
 │   ├── deploy.yml      # Main deployment playbook
-│   └── vars/           # Ansible variables
+│   └── vars/vars.yml   # Ansible variables
 └── detailsapp/         # Application files
     ├── src/            # Source code directory
     ├── details.py      # Main application
