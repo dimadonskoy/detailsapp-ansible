@@ -1,4 +1,4 @@
-# 🚀 Webapp (Details) deployment project
+# 🚀 Webapp (Details-app) deployment project
 
 [![Bash](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white)](https://www.gnu.org/software/bash/)
 [![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)](https://www.nginx.com/)
